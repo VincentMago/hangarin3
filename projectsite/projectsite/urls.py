@@ -16,7 +16,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from hangarincore.views import (
+    HomePageView,
+    TaskListView, TaskCreateView, TaskUpdateView, TaskDeleteView,
+    CategoryListView, CategoryCreateView, CategoryUpdateView, CategoryDeleteView,
+    PriorityListView, PriorityCreateView, PriorityUpdateView, PriorityDeleteView,
+)
 
 urlpatterns = [
+    path('', HomePageView.as_view(), name='home'),
     path('admin/', admin.site.urls),
+    path('tasks/', TaskListView.as_view(), name='tasks-list'),
+    path('tasks/create/', TaskCreateView.as_view(), name='tasks-create'),
+    path('tasks/<int:pk>/update/', TaskUpdateView.as_view(), name='tasks-update'),
+    path('tasks/<int:pk>/delete/', TaskDeleteView.as_view(), name='tasks-delete'),
+
+    # Categories
+    path('categories/', CategoryListView.as_view(), name='categories-list'),
+    path('categories/create/', CategoryCreateView.as_view(), name='categories-create'),
+    path('categories/<int:pk>/update/', CategoryUpdateView.as_view(), name='categories-update'),
+    path('categories/<int:pk>/delete/', CategoryDeleteView.as_view(), name='categories-delete'),
+
+    # Priorities
+    path('priorities/', PriorityListView.as_view(), name='priorities-list'),
+    path('priorities/create/', PriorityCreateView.as_view(), name='priorities-create'),
+    path('priorities/<int:pk>/update/', PriorityUpdateView.as_view(), name='priorities-update'),
+    path('priorities/<int:pk>/delete/', PriorityDeleteView.as_view(), name='priorities-delete'),
 ]

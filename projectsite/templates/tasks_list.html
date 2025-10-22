@@ -6,9 +6,35 @@
   <div class="container-fluid">
     <h4 class="page-title">Tasks</h4>
 
+    <form class="navbar-left navbar-form nav-search mb-3" action="{% url 'tasks-list' %}" method="get">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search tasks..." name="q" value="{{ request.GET.q }}">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit"><i class="la la-search"></i> Search</button>
+        </div>
+      </div>
+    </form>
+
     <div class="mb-3">
       <a href="{% url 'tasks-create' %}" class="btn btn-primary">Add Task</a>
     </div>
+      <form method="get" class="row mb-3 g-2 align-items-center">
+  <div class="col-auto">
+    <label for="sortSelectTasks" class="col-form-label">Sort by</label>
+  </div>
+  <div class="col-auto">
+    <select class="form-control form-control-sm" id="sortSelectTasks" name="sort_by">
+      <option value="title" {% if request.GET.sort_by == "title" %}selected{% endif %}>Title</option>
+      <option value="status" {% if request.GET.sort_by == "status" %}selected{% endif %}>Status</option>
+      <option value="deadline" {% if request.GET.sort_by == "deadline" %}selected{% endif %}>Deadline</option>
+      <option value="category__name" {% if request.GET.sort_by == "category__name" %}selected{% endif %}>Category</option>
+      <option value="priority__name" {% if request.GET.sort_by == "priority__name" %}selected{% endif %}>Priority</option>
+    </select>
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary btn-sm">Sort</button>
+  </div>
+</form>
 
     <div class="card">
       <div class="card-body">

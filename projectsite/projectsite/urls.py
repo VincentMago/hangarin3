@@ -15,7 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from django.contrib.auth import views as auth_views
 from hangarincore.views import (
     HomePageView,
     TaskListView, TaskCreateView, TaskUpdateView, TaskDeleteView,
@@ -25,7 +26,9 @@ from hangarincore.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('pwa.urls')),
     path('', HomePageView.as_view(), name='home'),
+    path("accounts/", include("allauth.urls")), # allauth routes
 
     path('tasks/', TaskListView.as_view(), name='tasks-list'),
     path('tasks/create/', TaskCreateView.as_view(), name='tasks-create'),
@@ -41,4 +44,7 @@ urlpatterns = [
     path('priorities/create/', PriorityCreateView.as_view(), name='priorities-create'),
     path('priorities/<int:pk>/edit/', PriorityUpdateView.as_view(), name='priorities-update'),
     path('priorities/<int:pk>/delete/', PriorityDeleteView.as_view(), name='priorities-delete'),
+    re_path(r'^login/$', auth_views.LoginView.as_view(
+       template_name='login.html'), name='login'),
+    re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
 ]
